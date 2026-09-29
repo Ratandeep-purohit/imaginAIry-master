@@ -97,12 +97,12 @@ update-stablestudio:
 	cd ../imaginAIry-StableStudio && \
 	yarn build && \
 	yarn build:production
-	rm -rf imaginairy/http/stablestudio/dist
-	cp -R ../imaginAIry-StableStudio/packages/stablestudio-ui/dist imaginairy/http/stablestudio/dist
-	rm -rf imaginairy/http/stablestudio/dist/examples
-	rm -rf imaginairy/http/stablestudio/dist/media
-	rm -rf imaginairy/http/stablestudio/dist/presets
-	cp ../imaginAIry-StableStudio/LICENSE imaginairy/http/stablestudio/dist/LICENSE
+	rm -rf imaginairy/http_app/stablestudio/dist
+	cp -R ../imaginAIry-StableStudio/packages/stablestudio-ui/dist imaginairy/http_app/stablestudio/dist
+	rm -rf imaginairy/http_app/stablestudio/dist/examples
+	rm -rf imaginairy/http_app/stablestudio/dist/media
+	rm -rf imaginairy/http_app/stablestudio/dist/presets
+	cp ../imaginAIry-StableStudio/LICENSE imaginairy/http_app/stablestudio/dist/LICENSE
 	@echo "Updated stablestudio"
 
 vendor_openai_clip:
