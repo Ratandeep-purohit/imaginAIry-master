@@ -42,7 +42,10 @@ class StableStudioImage(BaseModel):
     id: str
     created_at: Optional[datetime] = None
     input: Optional["StableStudioInput"] = None
-    blob: Optional[Base64Bytes] = None
+    # StableStudio transports generated images as base64 text. Keeping this as
+    # bytes makes Pydantic try to UTF-8 decode arbitrary JPEG bytes on response
+    # serialization, which can fail for perfectly valid images.
+    blob: Optional[str] = None
 
 
 class StableStudioImages(BaseModel):
