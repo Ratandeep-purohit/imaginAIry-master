@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import Any, List
 
 DEFAULT_MODEL_WEIGHTS = "sd15"
-DEFAULT_SOLVER = "ddim"
+DEFAULT_SOLVER = "dpmpp"
 DEFAULT_UPSCALE_MODEL = "realesrgan-x2-plus"
 
 DEFAULT_NEGATIVE_PROMPT = (
