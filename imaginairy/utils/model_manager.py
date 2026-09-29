@@ -225,9 +225,10 @@ def _get_diffusion_model_refiners(
     """
 
     global MOST_RECENTLY_LOADED_MODEL
-    _get_diffusion_model_refiners.cache_clear()
-    clear_gpu_cache()
 
+    # Keep the expensive base pipeline cached between generations.  The previous
+    # cache_clear() call defeated the @lru_cache and forced model reloading for
+    # every image, which is a major latency regression for repeated generation.
     architecture = iconfig.MODEL_ARCHITECTURE_LOOKUP[architecture_alias]
     if architecture.primary_alias in ("sd15", "sd15inpaint"):
         sd = load_sd15_pipeline(
