@@ -69,7 +69,8 @@ def generate_single_image(
         dtype = torch.float16
 
     get_device()
-    clear_gpu_cache()
+    # Keep CUDA allocations warm between generations; repeatedly forcing GC/empty_cache
+    # adds synchronization overhead and prevents the allocator from reusing memory.
     prompt = prompt.make_concrete_copy()
 
     if not logging_context:
@@ -342,8 +343,6 @@ def generate_single_image(
                 )
         x = noised_latent
         x = x.to(device=sd.unet.device, dtype=sd.unet.dtype)
-        clear_gpu_cache()
-
         with lc.timing("unet"):
             for step in tqdm(
                 sd.steps, bar_format="    {l_bar}{bar}{r_bar}", leave=False
@@ -360,12 +359,9 @@ def generate_single_image(
             # trying to clear memory. not sure if this helps
             sd.unet.set_context(context="self_attention_map", value={})
             sd.unet._reset_context()
-            clear_gpu_cache()
-
         logger.debug("Decoding image")
         if x.device != sd.lda.device:
             sd.lda.to(x.device)
-        clear_gpu_cache()
         with lc.timing("decode-img"):
             gen_img = sd.lda.decode_latents(x.to(dtype=sd.lda.dtype))
 
@@ -460,7 +456,6 @@ def generate_single_image(
                 log(f"   Ending VRAM: {result.gpu_str('memory_end')}")
         for controlnet, _ in controlnets:
             controlnet.eject()
-        clear_gpu_cache()
         return result
 
 
