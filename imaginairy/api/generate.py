@@ -112,7 +112,7 @@ def imagine_image_files(
                 )
             except FileNotFoundError as e:
                 logger.error(str(e))
-                exit(1)
+                raise RuntimeError(str(e)) from e
 
         base_count += 1
         del result
