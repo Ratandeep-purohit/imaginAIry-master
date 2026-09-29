@@ -182,7 +182,10 @@ def generate_single_image(
         result_images = {}
         progress_latents: list[torch.Tensor] = []
 
-        # If the image is unsafe, we can discard it or handle it accordingly
+        # Keep the generated image attached to the result so the caller can inspect
+        # the safety score and decide whether to save/retry it.  In particular, do
+        # not leave final_image uninitialized on the filtered path.
+        final_image = image
         if is_filtered:
             image = None  # Discard the unsafe image
         else:
