@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>imaginAIry App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mock Browser Top Bar -->
+        <header class="top-bar">
+            <div class="window-controls">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <div class="address-bar">
+                <span class="url-text" id="url-text">imaginairy.app / generate</span>
+            </div>
+            <!-- Navigation Links -->
+            <div class="nav-links">
+                <a href="#" id="nav-generate" class="active">Generate</a>
+                <a href="#" id="nav-gallery">Gallery</a>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- GENERATE SCREEN -->
+            <div id="screen-generate" class="screen active">
+                <aside class="sidebar">
+                    <div class="form-group">
+                        <label for="prompt">Prompt</label>
+                        <textarea id="prompt" rows="3" placeholder='"a scenic landscape, sunset, ultra detailed"'></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="model">Model</label>
+                        <select id="model">
+                            <option selected>Stable Diffusion 1.5</option>
+                            <option>Stable Diffusion XL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image-size">Image Size</label>
+                        <select id="image-size">
+                            <option selected>256 × 256</option>
+                            <option>512 × 512</option>
+                            <option>1024 × 1024</option>
+                            <option>768 × 1024</option>
+                            <option>1024 × 768</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="steps">Steps</label>
+                        <input type="number" id="steps" value="5" min="1" max="150">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="controlnet">ControlNet Mode</label>
+                        <select id="controlnet">
+                            <option>None</option>
+                            <option>Canny</option>
+                            <option>Depth</option>
+                            <option>Openpose</option>
+                        </select>
+                    </div>
+
+                    <button class="generate-btn" id="generate-btn">
+                        <svg class="spark-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11 2L13 9L20 11L13 13L11 20L9 13L2 11L9 9L11 2Z" fill="currentColor"/>
+                            <path d="M19.5 17.5L20.5 20.5L23.5 21.5L20.5 22.5L19.5 25.5L18.5 22.5L15.5 21.5L18.5 20.5L19.5 17.5Z" fill="currentColor"/>
+                            <path d="M5.5 18.5L6.5 21L9 22L6.5 23L5.5 25.5L4.5 23L2 22L4.5 21L5.5 18.5Z" fill="currentColor"/>
+                        </svg>
+                        Generate
+                    </button>
+                </aside>
+
+                <main class="preview-area">
+                    <div class="preview-placeholder">
+                        <div class="icon-circle">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21 15 16 10 5 21"></polyline>
+                            </svg>
+                        </div>
+                        <p>Generated image preview appears here</p>
+                    </div>
+                </main>
+            </div>
+
+            <!-- GALLERY SCREEN -->
+            <div id="screen-gallery" class="screen">
+                <div class="gallery-toolbar">
+                    <div class="search-bar-container">
+                        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="search-prompts" placeholder="Search prompts...">
+                    </div>
+                    <select id="gallery-model-filter" class="filter-dropdown">
+                        <option>All Models</option>
+                        <option>Stable Diffusion XL</option>
+                        <option>Stable Diffusion 1.5</option>
+                    </select>
+                </div>
+
+                <div class="gallery-grid">
+                    <!-- Cards will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
