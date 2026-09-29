@@ -19,8 +19,7 @@ def generate_image(prompt):
 def generate_image_b64(prompt):
     """ImaginePrompt to generated base64 encoded image."""
     img_io = generate_image(prompt)
-    img_base64 = base64.b64encode(img_io.getvalue())
-    return img_base64
+    return base64.b64encode(img_io.getvalue()).decode("ascii")
 
 
 class Base64Bytes(bytes):
