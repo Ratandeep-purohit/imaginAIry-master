@@ -212,7 +212,7 @@ jobs:
   #     - run: mkdocs build --strict
 
   publish-docs:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
