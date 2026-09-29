@@ -257,7 +257,7 @@ def imagine(
     if half_mode is None:
         half_mode = "cuda" in get_device() or get_device() == "mps"
 
-    with torch.no_grad(), fix_torch_nn_layer_norm(), fix_torch_group_norm():
+    # Image generation is inference-only. inference_mode avoids autograd/view-tracking\n    # overhead beyond no_grad while preserving the same model outputs.\n    with torch.inference_mode(), fix_torch_nn_layer_norm(), fix_torch_group_norm():
         for i, prompt in enumerate(prompts):
             concrete_prompt = prompt.make_concrete_copy()
             prog_text = f"{i + 1}/{num_prompts}"
