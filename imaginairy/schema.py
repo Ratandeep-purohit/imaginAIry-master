@@ -671,10 +671,7 @@ class ImaginePrompt(BaseModel, protected_namespaces=()):
         # If still not found, use solver-specific defaults
         if v is None:
             solver_type = info.data.get("solver_type", "ddim").lower()
-            steps_lookup = {"ddim": 50, "dpmpp": 20}
-            v = steps_lookup.get(
-                solver_type, 50
-            )  # Default to 50 if solver not recognized
+            # DPM-Solver++ is the fast default for guided diffusion. 20 steps\n            # is a practical quality/speed balance; DDIM remains available when\n            # explicitly requested.\n            steps_lookup = {"ddim": 50, "dpmpp": 20}\n            v = steps_lookup.get(\n                solver_type, 20\n            )  # Fast fallback for unknown/missing solver defaults
 
         try:
             return int(v)
