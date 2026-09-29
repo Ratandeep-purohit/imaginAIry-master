@@ -128,11 +128,9 @@ class LazyLoadingImage:
             elif self._lazy_url:
                 import requests
 
-                self._img = Image.open(
-                    BytesIO(
-                        requests.get(self._lazy_url, stream=True, timeout=60).content
-                    )
-                )
+                response = requests.get(self._lazy_url, stream=True, timeout=60)
+                response.raise_for_status()
+                self._img = Image.open(BytesIO(response.content))
 
                 logger.debug(
                     f"Loaded input 🖼  of size {self._img.size} from {self._lazy_url}"
