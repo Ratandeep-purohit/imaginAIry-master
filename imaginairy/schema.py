@@ -408,7 +408,7 @@ class ImaginePrompt(BaseModel, protected_namespaces=()):
         if image_prompt and not isinstance(image_prompt, list):
             image_prompt = [image_prompt]
 
-        if not image_prompt_strength:
+        if image_prompt_strength is None:
             image_prompt_strength = 0.35
 
         super().__init__(
