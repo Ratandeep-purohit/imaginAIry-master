@@ -58,7 +58,8 @@ def get_cached_url_path(url: str, category=None) -> str:
         os.rename(old_dest_path, dest_path)
         return dest_path
 
-    r = requests.get(url)
+    r = requests.get(url, timeout=60)
+    r.raise_for_status()
 
     with open(dest_path, "wb") as f:
         f.write(r.content)
