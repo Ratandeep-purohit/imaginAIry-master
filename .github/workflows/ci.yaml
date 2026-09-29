@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 env:
   PIP_DISABLE_PIP_VERSION_CHECK: 1
