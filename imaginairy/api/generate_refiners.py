@@ -343,7 +343,7 @@ def generate_single_image(
                 )
         x = noised_latent
         x = x.to(device=sd.unet.device, dtype=sd.unet.dtype)
-        with lc.timing("unet"):
+        with lc.timing("unet"), torch.no_grad():
             for step in tqdm(
                 sd.steps, bar_format="    {l_bar}{bar}{r_bar}", leave=False
             ):
