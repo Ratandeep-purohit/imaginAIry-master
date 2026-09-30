@@ -156,7 +156,10 @@ def tensor_to_image(tensor: Tensor) -> Image.Image:
         case _:
             raise ValueError(f"Unsupported number of channels: {num_channels}")
 
-    return Image.fromarray((tensor.cpu().numpy() * 255).astype("uint8"))  # type: ignore[reportUnknownType]
+    # Image conversion is a terminal operation; gradients are not needed here.
+    # Detach explicitly so this helper also works when called outside an
+    # inference/no-grad context.
+    return Image.fromarray((tensor.detach().cpu().numpy() * 255).astype("uint8"))  # type: ignore[reportUnknownType]
 
 
 def safe_open(
