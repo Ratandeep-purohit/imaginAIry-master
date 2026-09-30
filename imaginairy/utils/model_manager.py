@@ -205,7 +205,14 @@ def get_diffusion_model_refiners(
     # ensures a "fresh" copy that doesn't have additional injected parts
     sd = sd.structural_copy()
 
-    sd.set_self_attention_guidance(enable=True)
+    # Self-Attention Guidance adds an additional UNet pass and can exceed
+    # 4 GB GPUs even at moderate resolutions. Keep it enabled on larger GPUs,
+    # but automatically disable it on low-VRAM CUDA devices.
+    use_sag = True
+    if sd.unet.device.type == "cuda":
+        total_vram = torch.cuda.get_device_properties(sd.unet.device).total_memory
+        use_sag = total_vram >= 6 * 1024**3
+    sd.set_self_attention_guidance(enable=use_sag)
 
     return sd
 
